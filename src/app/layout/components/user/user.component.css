@@ -1,0 +1,16 @@
+.user{
+  height: 40px;
+  align-items:center;
+}
+
+.user .select{
+  padding-right: 10px;
+  padding-top: 7px;
+}
+
+.icon-user{
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  margin-right: 5px;
+}

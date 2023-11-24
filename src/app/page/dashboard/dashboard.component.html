@@ -1,0 +1,18 @@
+
+<div [hidden]="showSpinner">
+  <ngx-extended-pdf-viewer
+    [(src)]="srcPdf"
+    [useBrowserLocale]="true"
+    [textLayer]="true"
+    [showHandToolButton]="true"
+    [height]="'800px'"
+    [zoom]="'page-width'"
+    (pagesLoaded)="onPagesLoaded($event)"
+    >
+  </ngx-extended-pdf-viewer>
+</div>
+<div *ngIf="showSpinner" class="boxLoading">
+  <div class="box">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

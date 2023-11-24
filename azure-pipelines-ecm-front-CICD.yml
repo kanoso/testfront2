@@ -1,0 +1,85 @@
+trigger:
+  branches:
+    include:
+      - master
+
+resources:
+  repositories:
+    - repository: ibkTeamAzTemplates
+      type: bitbucket
+      endpoint: 'Bitbucket - enjc'
+      name: ibkteam/crew-cliente-frontend-template
+      ref: master
+
+variables:
+  - name: ArtifactName
+    value: "ECM-FRONT-END"
+  - name: WebAppName
+    value: "ecm-portal"
+  - name: Artifactory_Service_Connections
+    value: "ARTIFACTORY_ECM"
+name: $(Rev:r)
+stages:
+  - template: Build/node-artifactory/azure-pipelines-build.yml@ibkTeamAzTemplates
+    parameters:
+      GitTagEnabled: false
+      GitUserName: mcano
+      GitUserEmail: "mcano@intercorp.com.pe"
+      VariablesBuild: "VariablesBuild"
+      vmImage: "ubuntu-latest"
+      npmrcEnabled: false
+      Artifactory_Registry:
+      Artifactory_Auth:
+      NodeVersion: 16.X
+      SonarCloudEnabled: false
+      SonarCloud_Service_Connections: "SonarCloudECM"
+      SonarCloud_Organization: "interbank"
+      ProjectName: "MiproyectoenSonar"
+      SourcesPath: "src"
+      NPMworkingDir: '.'
+      UnitTestEnabled: true
+      SonarCloudCoverageEnabled: false
+      ArtifactoryUploadEnabled: true
+      JSprojectname: "dist/ecm-portal"
+      ArtifactName: $(ArtifactName)
+      Artifactory_Service_Connections: $(Artifactory_Service_Connections)
+      ArtifactUpload: "ecm-generic-snapshot"
+  - template: Deploy/static-web-app/azure-pipelines-deploy.yml@ibkTeamAzTemplates
+    parameters:
+      environmentName: DEV
+      stageOld: Build
+      VariablesDeploy: "VariablesDEV"
+      Artifactory_Service_Connections: $(Artifactory_Service_Connections)
+      ArtifactDownload: 'ecm-generic-snapshot'
+      ArtifactName: $(ArtifactName)
+      AzureStaticWebAppEnabled: true
+      WebAppName: $(WebAppName)
+      azure_static_web_apps_api_token: $(ECM-FRONT-END-API-TOKEN)
+      ArtifactoryUploadEnabled: true
+      artifactUpload: 'ecm-generic-rc'
+  - template: Deploy/static-web-app/azure-pipelines-deploy.yml@ibkTeamAzTemplates
+    parameters:
+      environmentName: UAT
+      stageOld: DEV
+      VariablesDeploy: "VariablesUAT"
+      Artifactory_Service_Connections: $(Artifactory_Service_Connections)
+      ArtifactDownload: 'ecm-generic-rc'
+      ArtifactName: $(ArtifactName)
+      AzureStaticWebAppEnabled: true
+      WebAppName: $(WebAppName)
+      azure_static_web_apps_api_token: $(ECM-FRONT-END-API-TOKEN)
+      ArtifactoryUploadEnabled: true
+      artifactUpload: 'ecm-generic-release'
+  - template: Deploy/static-web-app/azure-pipelines-deploy.yml@ibkTeamAzTemplates
+    parameters:
+      environmentName: PRD
+      stageOld: UAT
+      VariablesDeploy: "VariablesPRD"
+      Artifactory_Service_Connections: $(Artifactory_Service_Connections)
+      ArtifactDownload: 'ecm-generic-release'
+      ArtifactName: $(ArtifactName)
+      AzureStaticWebAppEnabled: true
+      WebAppName: $(WebAppName)
+      azure_static_web_apps_api_token: $(ECM-FRONT-END-API-TOKEN)
+      ArtifactoryUploadEnabled: false
+      artifactUpload: 'ecm-generic-release'

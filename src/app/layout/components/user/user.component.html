@@ -1,0 +1,13 @@
+
+<div class="user flex flex-row pt-9">
+  <div class="">
+    <mat-icon class="icon-user" aria-hidden="false" fontIcon="account_circle"></mat-icon>
+  </div>
+  <mat-form-field class="select">
+    <mat-select>
+      <mat-option *ngFor="let user of users" [value]="user.value">
+        {{user.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

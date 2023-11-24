@@ -1,0 +1,13 @@
+.boxLoading{
+  height: 800px;
+  background-color: whitesmoke;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.box{
+  padding: auto;
+  margin: auto;
+}

@@ -1,0 +1,40 @@
+trigger:
+  branches:
+    include:
+      - feature/*
+      - hotfix/*
+
+resources:
+  repositories:
+    - repository: ibkTeamAzTemplates
+      type: bitbucket
+      endpoint: 'Bitbucket - enjc'
+      name: ibkteam/crew-cliente-frontend-template
+      ref: master
+
+name: $(Rev:r)
+stages:
+  - template: Build/node-artifactory/azure-pipelines-build.yml@ibkTeamAzTemplates
+    parameters:
+      GitTagEnabled: false
+      GitUserName: mcano
+      GitUserEmail: "mcano@intercorp.com.pe"
+      VariablesBuild: "VariablesBuild"
+      vmImage: "ubuntu-latest"
+      npmrcEnabled: false
+      Artifactory_Registry: ""
+      Artifactory_Auth: ""
+      NodeVersion: 16.X
+      SonarCloudEnabled: false
+      SonarCloud_Service_Connections: ""
+      SonarCloud_Organization: ""
+      ProjectName: ""
+      SourcesPath: '.'
+      NPMworkingDir: '.'
+      UnitTestEnabled: false
+      SonarCloudCoverageEnabled: false
+      ArtifactoryUploadEnabled: false
+      JSprojectname: ""
+      ArtifactName: ""
+      Artifactory_Service_Connections: "ARTIFACTORY_ECM"
+      ArtifactUpload: ""

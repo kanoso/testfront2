@@ -1,0 +1,11 @@
+.logo {
+
+}
+
+.logo > img {
+  width: 60px;
+}
+
+.logo > span {
+  color: white;
+}
