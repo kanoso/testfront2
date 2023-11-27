@@ -16,6 +16,9 @@ export class DataService {
   private headersOctet = new HttpHeaders({
     'Content-Type': 'application/octet-stream',
   });
+  private headersPdf = new HttpHeaders({
+    'Content-Type': 'application/pdf'
+  });
 
   constructor(private http: HttpClient) {}
 
@@ -40,6 +43,14 @@ export class DataService {
     return this.http.get(this._baseUri, {
       params: data,
       headers: this.headers,
+    });
+  }
+
+  execGetPdf(url: string, data?: any): Observable<Object> {
+    if (url) this.set(url);
+    return this.http.get(this._baseUri, {
+      params: data,
+      headers: this.headersPdf,
     });
   }
 

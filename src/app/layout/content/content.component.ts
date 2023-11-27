@@ -24,7 +24,7 @@ export class ContentComponent implements OnInit {
 
   ngOnInit() {
     this.nodeText = "Light Mo.";
-    this.loadDashboard();
+    //this.loadDashboard();
   }
 
   toogleClose(){
@@ -49,9 +49,14 @@ export class ContentComponent implements OnInit {
 
     this._dashboardService.getDashboard(params)
       .then((res) => {
+        debugger;
         this.dashboards = res;
         console.log(res);
         this.dashboard = this.dashboards[0];
+
+        //let pdfBlob = new Blob([new Uint8Array(pdfArray, 0)], { type: "application/pdf" })
+        //let pdfUrlTest = URL.createObjectURL(pdfBlob);
+
         this.dashboardComponent.loadDashboard(this.dashboard.urlPdf);
       })
       .catch((ex) => {
@@ -62,4 +67,21 @@ export class ContentComponent implements OnInit {
         );
       });
   }
+
+  /*
+  loadReport(url: string): void {
+    this._dashboardService.getReport(url)
+      .then((res) => {
+        debugger;
+        console.log(res);
+      })
+      .catch((ex) => {
+        console.log(ex);
+        debugger;
+        this._dashboardService.showMessageError(
+          CONSTANT.MESSAGE.errorListar + ' Dashboards'
+        );
+      });
+  }
+  */
 }

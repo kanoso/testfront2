@@ -15,7 +15,18 @@ app.http("message", {
 
     await asyncForEach(pages, async (page) => {
       let pdf_url = await generateSnapshot(context, apikey, page.guid, url);
+
+      //const pdfArray = await fetch(pdf_url).then(r => r.arrayBuffer())
+      //const pdfBlob = new Blob([new Uint8Array(pdfArray, 0)], { type: "application/pdf" })
+      //const pdfUrlTest = URL.createObjectURL(pdfBlob);
+
+      //context.log(pdf);
+      //context.log(pdfBlob);
+
       page.urlPdf = pdf_url + size;
+      //page.pdfBlod = pdfBlob;
+      //page.pdfArray = pdfArray;
+      //page.pdfUrlTest = pdfUrlTest;
     });
 
     context.log(pages);
@@ -23,6 +34,7 @@ app.http("message", {
     return {
       body: JSON.stringify(pages),
       headers: {
+        //'Content-Type': 'application/octet-stream'
         'Content-Type': 'application/json'
       }
     };
@@ -156,4 +168,3 @@ async function asyncForEach(array, callback) {
     await callback(array[index], index, array);
   }
 }
-

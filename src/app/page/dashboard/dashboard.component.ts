@@ -9,8 +9,8 @@ import { CONSTANT } from 'src/app/shared/service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  srcPdf: string = 'assets/example.pdf';
-  showSpinner: boolean = true;
+  srcPdf: string = 'https://gorgon.nr-assets.net/image/b65f33b6-4357-42bc-ab41-b0f9d658b3c5?format=PDF&width=1700';  //'assets/example.pdf';
+  showSpinner: boolean = false;
   titleDashboard: string = 'Dashboard...';
   dashboards: IDashboard[];
 
@@ -31,12 +31,20 @@ export class DashboardComponent implements OnInit {
   }
 
   onPagesLoaded(event){
-    if(this.srcPdf != 'assets/example.pdf')
+    if(this.srcPdf != 'https://gorgon.nr-assets.net/image/b65f33b6-4357-42bc-ab41-b0f9d658b3c5?format=PDF&width=1700') //'assets/example.pdf')
       this.showSpinner = false;
   }
 
-  public loadDashboard(url:string){
-    this.showSpinner = true;
-    this.srcPdf = url;
+  public loadDashboard(url: any){
+    debugger;
+    /*
+    const blob = new Blob( [ url ], {
+      type: "application/json;charset=utf-8"
+    });
+    */
+
+    //this.showSpinner = true;
+    //this.srcPdf = URL.createObjectURL(blob);
+    //this.srcPdf = url;
   }
 }

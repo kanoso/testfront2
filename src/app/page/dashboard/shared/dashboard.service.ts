@@ -4,7 +4,7 @@ import { DataService, ErrorService } from 'src/app/shared/service';
 
 @Injectable({providedIn: 'root'})
 export class DashboardService {
-  methodGetAllURL: string = '/api/message';
+  methodGetAllURL: string = 'http://localhost:7071/api/message'; //'/api/message';
 
   constructor(
     private _dataService: DataService,
@@ -13,13 +13,22 @@ export class DashboardService {
 
 
   getDashboard(params: any): Promise<any> {
-      return new Promise((resolve, reject) => {
-      this._dataService.execPostJson(this.methodGetAllURL, params)
-       .subscribe((res: any) => {
-         resolve(res);
-       }, reject);
-     });
-   }
+    return new Promise((resolve, reject) => {
+    this._dataService.execPostJson(this.methodGetAllURL, params)
+      .subscribe((res: any) => {
+        resolve(res);
+      }, reject);
+    });
+  }
+
+  getReport(url: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+    this._dataService.execGetPdf(url)
+      .subscribe((res: any) => {
+        resolve(res);
+      }, reject);
+    });
+  }
 
    /**
    * Show Message Error

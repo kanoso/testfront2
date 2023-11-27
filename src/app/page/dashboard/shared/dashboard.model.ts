@@ -3,6 +3,7 @@ export interface IDashboard {
   guid: string;
   name: string;
   urlPdf: string;
+  pdfBlod: any;
 }
 
 export class Dashboard implements IDashboard {
@@ -10,6 +11,7 @@ export class Dashboard implements IDashboard {
   guid: string;
   name: string;
   urlPdf: string;
+  pdfBlod: any;
 
   onstructor(
     dashboard?
@@ -18,5 +20,6 @@ export class Dashboard implements IDashboard {
     this.guid = dashboard.guid;
     this.name = dashboard.name;
     this.urlPdf = dashboard.urlPdf;
+    this.pdfBlod = dashboard.pdfBlod;
   }
 }
